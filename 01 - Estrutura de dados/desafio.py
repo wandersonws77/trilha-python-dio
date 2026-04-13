@@ -150,9 +150,28 @@ def selecionar_conta(usuarios):
         print("\n@@@ Usuário não possui conta! @@@")
         return None
 
-    return usuario.contas[0]
+    if len(usuario.contas) == 1:
+        return usuario.contas[0]
 
+    print("\n=== Contas disponíveis ===")
+    for indice, conta in enumerate(usuario.contas, start=1):
+        print(
+            f"{indice} - Agência: {conta.agencia} | "
+            f"C/C: {conta.numero_conta} | "
+            f"Titular: {conta.usuario.nome}"
+        )
 
+    try:
+        opcao = int(input("Selecione o número da conta: "))
+    except ValueError:
+        print("\n@@@ Entrada inválida! Digite um número de conta válido. @@@")
+        return None
+
+    if 1 <= opcao <= len(usuario.contas):
+        return usuario.contas[opcao - 1]
+
+    print("\n@@@ Conta selecionada inválida! @@@")
+    return None
 # ================== MAIN ==================
 
 def main():
